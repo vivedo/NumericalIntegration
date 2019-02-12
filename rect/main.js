@@ -123,4 +123,5 @@ function draw() {
     text('b: ' + b, bSlider.x * 2 + bSlider.width, 90);
     text('n: ' + n, nSlider.x * 2 + nSlider.width, 120);
     text('∫: ' + area, nSlider.x * 2 + nSlider.width, 150);
+    text(Math.round(frameRate()) + ' FPS', WIDTH - 60, HEIGHT - 20);
 }
