@@ -5,7 +5,7 @@ const WIDTH = window.innerWidth;
 const unitX = Math.PI/2;
 const unitY = 1;
 
-let func = x => sin(x)
+let func = x => sin(x);
 
 let zoomSlider;
 let aSlider;
