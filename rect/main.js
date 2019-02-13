@@ -7,33 +7,47 @@ const unitY = 1;
 
 let func = x => sin(x)
 
-let zoomSlider;
-let aSlider;
-let bSlider;
-let nSlider;
+const slider = {};
+const buff = {};
 
 function setup() {
     createCanvas(WIDTH, HEIGHT);
 
     background("#eee");
     
-    zoomSlider = createSlider(1, 150, 150);
-    aSlider = createSlider(-50, 50, -15);
-    bSlider = createSlider(-50, 50, 20);
-    nSlider = createSlider(1, 30, 4);
+    slider.zoom = createSlider(1, 150, 150);
+    slider.a = createSlider(-50, 50, -15);
+    slider.b = createSlider(-50, 50, 20);
+    slider.n = createSlider(1, 30, 4);
 
-    zoomSlider.position(20, 20);
-    aSlider.position(20, 50);
-    bSlider.position(20, 80);
-    nSlider.position(20, 110);
+    slider.zoom.position(20, 20);
+    slider.a.position(20, 50);
+    slider.b.position(20, 80);
+    slider.n.position(20, 110);
 }
   
 function draw() {
-    const zoom = zoomSlider.value();
-    const a = aSlider.value() / 10;
-    const b = bSlider.value() / 10;
-    const n = nSlider.value();
+    const zoom = slider.zoom.value();
+    const a = slider.a.value() / 10;
+    const b = slider.b.value() / 10;
+    const n = slider.n.value();
 
+    if(zoom !== buff.zoom || a !== buff.a || b !== buff.b || n !== buff.n){
+        buff.zoom = zoom;
+        buff.a = a;
+        buff.b = b;
+        buff.n = n;
+
+        printGraph(zoom, a, b, n);
+    }
+
+    fill("#fff");
+    rect(WIDTH - 65, HEIGHT - 15, 65, -20);
+    fill("#000");
+    text(Math.round(frameRate()) + ' FPS', WIDTH - 60, HEIGHT - 20);
+}
+
+function printGraph(zoom, a, b, n){
     background("#fff");
 
     translate(WIDTH/2, HEIGHT/2);
@@ -113,15 +127,14 @@ function draw() {
             
         area += func(c) * dx;
     }
-    
+
     // slider text
     translate(-WIDTH/2, -HEIGHT/2);
     stroke("transparent");
     fill(0);
-    text('zoom:' + zoom + '%', zoomSlider.x * 2 + zoomSlider.width, 30);
-    text('a: ' + a, aSlider.x * 2 + aSlider.width, 60);
-    text('b: ' + b, bSlider.x * 2 + bSlider.width, 90);
-    text('n: ' + n, nSlider.x * 2 + nSlider.width, 120);
-    text('∫: ' + area, nSlider.x * 2 + nSlider.width, 150);
-    text(Math.round(frameRate()) + ' FPS', WIDTH - 60, HEIGHT - 20);
+    text('zoom:' + zoom + '%', slider.zoom.x * 2 + slider.zoom.width, 30);
+    text('a: ' + a, slider.a.x * 2 + slider.a.width, 60);
+    text('b: ' + b, slider.b.x * 2 + slider.b.width, 90);
+    text('n: ' + n, slider.n.x * 2 + slider.n.width, 120);
+    text('∫: ' + area, slider.n.x * 2 + slider.n.width, 150);
 }
